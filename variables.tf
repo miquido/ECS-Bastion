@@ -2,10 +2,6 @@ variable "aws_region" {
   type = string
 }
 
-variable "web_domain" {
-  type = string
-}
-
 variable "environment" {
   type        = string
   description = "Environment name"
@@ -14,11 +10,6 @@ variable "environment" {
 variable "project" {
   type        = string
   description = "Account/Project Name"
-}
-
-variable "route53_zone_id" {
-  type        = string
-  description = "Route 53 Zone id for bastion entry"
 }
 
 variable "log_retention" {
@@ -58,4 +49,16 @@ variable "tags" {
   type        = map(string)
   description = "Default tags to apply on all created resources"
   default     = {}
+}
+
+variable "web_domain" {
+  default = ""
+  type = string
+  description = "domain under which bastion will be available"
+}
+
+variable "route53_zone_id" {
+  default = ""
+  type        = string
+  description = "Route 53 Zone id for bastion entry"
 }
