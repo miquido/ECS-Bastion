@@ -1,6 +1,6 @@
 #!/usr/bin/env sh
 
-AUTHORIZED_KEYS=$(aws ssm get-parameter --name /prod/bastion/pubkey | jq -r '.Parameter.Value')
+AUTHORIZED_KEYS=$(aws ssm get-parameter --name "$SSM_PUBKEYS" /prod/bastion/pubkey | jq -r '.Parameter.Value')
 
 mkdir -p /home/sshuser/.ssh && \
     echo "$AUTHORIZED_KEYS" > /home/sshuser/.ssh/authorized_keys && \

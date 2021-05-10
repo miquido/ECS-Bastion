@@ -22,6 +22,10 @@ module "ecs-bastion-task-definition" {
     {
       name  = "HOSTED_ZONE_ID"
       value = var.route53_zone_id
+    },
+    {
+      name  = "SSM_PUBKEYS"
+      value = "/${var.environment}/bastion/pubkey"
     }
   ]
 }
