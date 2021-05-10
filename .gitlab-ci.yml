@@ -1,0 +1,30 @@
+variables:
+    DOCKER_DRIVER: "overlay2"
+    DOCKER_TLS_CERTDIR: "/certs"
+
+.job_template: &job_template
+    image: docker:20.10.6
+    before_script:
+        - docker version
+    tags:
+        - docker
+        - miquido
+
+stages:
+  - build
+
+
+build:
+  <<: *job_template
+  environment:
+    name: prod
+  stage: build
+  script:
+    - cd docker
+    - docker build -t miquidocompany/aws-ecs-bastion:$CI_PIPELINE_ID-$CI_COMMIT_SHORT_SHA .
+    - echo $DOCKER_KEY | docker login --username $DOCKER_USER --password-stdin
+    - docker push miquidocompany/aws-ecs-bastion:$CI_PIPELINE_ID-$CI_COMMIT_SHORT_SHA
+  only:
+    - main
+  when: manual
+
