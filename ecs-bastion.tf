@@ -1,7 +1,7 @@
 module "ecs-bastion-task-definition" {
   source = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.46.2"
 
-  container_image  = "moscich/ecs-bastion:latest"
+  container_image  = var.container_image
   container_name   = "bastion"
   container_memory = 256
 
@@ -36,7 +36,7 @@ locals {
 }
 
 resource "aws_cloudwatch_log_group" "app" {
-  name              = "/aws/ecs/bastion"
+  name              = "/aws/ecs/${var.project}-${var.environment}-bastion"
   tags              = var.tags
   retention_in_days = var.log_retention
 }
@@ -74,16 +74,16 @@ resource "aws_ssm_parameter" "bastion_pubkey" {
   value = var.public_ssh_keys
 }
 
-resource aws_security_group ssh {
-  name = "${var.project}-${var.environment}-bastion-ssh-whitelist"
+resource "aws_security_group" "ssh" {
+  name   = "${var.project}-${var.environment}-bastion-ssh-whitelist"
   vpc_id = var.vpc_id
-  dynamic ingress {
+  dynamic "ingress" {
     for_each = var.whitelist_ips
     content {
       description = ingress.value.description
-      from_port = 22
-      protocol = "tcp"
-      to_port = 22
+      from_port   = 22
+      protocol    = "tcp"
+      to_port     = 22
       cidr_blocks = [ingress.value.cidr]
     }
 
@@ -91,7 +91,7 @@ resource aws_security_group ssh {
 }
 
 module "ecs_alb_service_task" {
-  source = "cloudposse/ecs-alb-service-task/aws"
+  source                         = "cloudposse/ecs-alb-service-task/aws"
   namespace                      = var.project
   stage                          = var.environment
   name                           = "bastion"

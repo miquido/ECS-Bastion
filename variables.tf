@@ -19,30 +19,30 @@ variable "log_retention" {
 }
 
 variable "public_ssh_keys" {
-  type = string
+  type        = string
   description = "rsa.pub strings"
 }
 
 variable "vpc_id" {
-  type = string
+  type        = string
   description = "vpc id"
 }
 
 variable "ecs_cluster_arn" {
-  type = string
+  type        = string
   description = "ECS Cluster arn"
 }
 variable "security_groups" {
-  type = list(string)
+  type        = list(string)
   description = "Security groups"
 }
 variable "public_subnet_ids" {
-  type = list(string)
+  type        = list(string)
   description = "Public subnets ids"
 }
 
 variable "whitelist_ips" {
-  type = list(object({description = string, cidr = string}))
+  type = list(object({ description = string, cidr = string }))
 }
 
 variable "tags" {
@@ -52,13 +52,19 @@ variable "tags" {
 }
 
 variable "web_domain" {
-  default = ""
-  type = string
+  default     = ""
+  type        = string
   description = "domain under which bastion will be available"
 }
 
 variable "route53_zone_id" {
-  default = ""
+  default     = ""
   type        = string
   description = "Route 53 Zone id for bastion entry"
+}
+
+variable "container_image" {
+  default     = "moscich/ecs-bastion:latest"
+  type        = string
+  description = "docker image of bastion"
 }
