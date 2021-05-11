@@ -1,0 +1,38 @@
+name: ecs-bastion
+gitlab_repo: miquido/terraform/ecs-bastion
+badges: []
+related: []
+description: |-
+  Creates a service on ECS that has ssh open to enable tunneling.
+usage: |-
+  ```hcl
+    module "ecs-bastion" {
+      source            = "git::ssh://git@gitlab.com/miquido/terraform/ecs-bastion.git?ref=tags/1.0"
+      aws_region        = var.aws_region
+      ecs_cluster_arn   = aws_ecs_cluster.main.arn
+      environment       = var.environment
+      project           = var.project
+      public_ssh_keys   = <<EOT
+                          ssh-ed25519 AAAAC3NzaC1lZDI1NTE5AAAAIBoJKBh1ECj1RGt/fgiQz/DvLwW9NzDmR3RAhB5Rb1BM test
+                          ssh-rsa AAAAB3NzaC1yc2EAAAADAQABAAABAQC/5jNq77nbp5FoRnK7lHHdHhCFa8jdJ8QzLF/M3b7nt0ansRwxgsMJMUAiHNdYvoR3UwmOgtUQzBasKfbML8hK/f0crSE0sh/cXvYBC+3jWN0sT3zW307w4po9KS+RJpP8mEu0vYh3Ua4+O06ePuagD5JfSNLJ8d6xi2QCY87cKENjs4ysupwN/+/VH5nWHerVrFKQ4oW/ARYHGfaL4N1npvSK9m2nnDy1uX+ti3GGys9/2GMW0wPbjrI+Z1sc252QdgxNGn/zT7lKWCn+00mAcov8wkclwTl3RQFSW2ni/3saFyBUi/9CiRvKtjLCdxks3+K2tTdHNUaAajlR7UfB marekmoscichowski@Mareks-MacBook-Pro.local
+      EOT
+      public_subnet_ids = module.vpc.public_subnet_ids
+      route53_zone_id   = aws_route53_zone.default.id
+      security_groups   = [module.vpc.vpc_default_security_group_id]
+      vpc_id            = module.vpc.vpc_id
+      web_domain        = "bastion.${local.app_web_domain}"
+      whitelist_ips = [
+        {
+          description = "ip Marka",
+          cidr        = "178.43.248.169/32",
+        }
+      ]
+  }
+  ```
+
+include:
+  - "docs/targets.md"
+  - "docs/terraform.md"
+contributors:
+  - name: "Marek Mościchowski"
+    github: "marekmoscichowski"
