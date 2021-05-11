@@ -1,3 +1,7 @@
+locals {
+  ssm_pubkeys = "/${var.environment}/bastion/pubkeys"
+}
+
 module "ecs-bastion-task-definition" {
   source = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.46.2"
 
@@ -25,7 +29,7 @@ module "ecs-bastion-task-definition" {
     },
     {
       name  = "SSM_PUBKEYS"
-      value = "/${var.environment}/bastion/pubkey"
+      value = local.ssm_pubkeys
     }
   ]
 }
@@ -63,19 +67,20 @@ data "aws_iam_policy_document" "bastion_policy" {
     ]
 
     resources = [
-      aws_ssm_parameter.bastion_pubkey.arn,
+      aws_ssm_parameter.bastion_pubkeys.arn,
     ]
   }
 }
 
-resource "aws_ssm_parameter" "bastion_pubkey" {
-  name  = "/${var.environment}/bastion/pubkey"
+resource "aws_ssm_parameter" "bastion_pubkeys" {
+  name  = local.ssm_pubkeys
   type  = "String"
   value = var.public_ssh_keys
 }
 
 resource "aws_security_group" "ssh" {
   name   = "${var.project}-${var.environment}-bastion-ssh-whitelist"
+  description = "Allow ips to ssh into bastion host"
   vpc_id = var.vpc_id
   dynamic "ingress" {
     for_each = var.whitelist_ips
@@ -86,12 +91,12 @@ resource "aws_security_group" "ssh" {
       to_port     = 22
       cidr_blocks = [ingress.value.cidr]
     }
-
   }
+  tags = merge({"Name": "ECS Bastion SSH whitelist"}, var.tags)
 }
 
 module "ecs_alb_service_task" {
-  source                         = "cloudposse/ecs-alb-service-task/aws"
+  source                         = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.55.1"
   namespace                      = var.project
   stage                          = var.environment
   name                           = "bastion"
