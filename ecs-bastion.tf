@@ -35,7 +35,7 @@ module "ecs-bastion-task-definition" {
 }
 
 locals {
-  container_definitions      = compact(tolist(module.ecs-bastion-task-definition.json_map_encoded))
+  container_definitions      = compact([module.ecs-bastion-task-definition.json_map_encoded])
   container_definitions_json = "[${join(",", local.container_definitions)}]"
 }
 
