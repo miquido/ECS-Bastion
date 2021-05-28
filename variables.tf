@@ -42,7 +42,7 @@ variable "public_subnet_ids" {
 }
 
 variable "whitelist_ips" {
-  type = list(object({ description = string, cidr = string }))
+  type        = list(object({ description = string, cidr = string }))
   description = "List of ip addresses that will be allowed to connect on port 22"
 }
 

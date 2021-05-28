@@ -1,5 +1,5 @@
 locals {
-  ssm_pubkeys = "/${var.environment}/bastion/pubkeys"
+  ssm_pubkeys = "/${var.project}/${var.environment}/bastion/pubkeys"
 }
 
 module "ecs-bastion-task-definition" {
@@ -79,9 +79,9 @@ resource "aws_ssm_parameter" "bastion_pubkeys" {
 }
 
 resource "aws_security_group" "ssh" {
-  name   = "${var.project}-${var.environment}-bastion-ssh-whitelist"
+  name        = "${var.project}-${var.environment}-bastion-ssh-whitelist"
   description = "Allow ips to ssh into bastion host"
-  vpc_id = var.vpc_id
+  vpc_id      = var.vpc_id
   dynamic "ingress" {
     for_each = var.whitelist_ips
     content {
@@ -92,7 +92,7 @@ resource "aws_security_group" "ssh" {
       cidr_blocks = [ingress.value.cidr]
     }
   }
-  tags = merge({"Name": "ECS Bastion SSH whitelist"}, var.tags)
+  tags = merge({ "Name" : "ECS Bastion SSH whitelist" }, var.tags)
 }
 
 module "ecs_alb_service_task" {
@@ -115,4 +115,12 @@ module "ecs_alb_service_task" {
   task_memory                    = 512
   task_cpu                       = 256
   exec_enabled                   = true
+
+  capacity_provider_strategies = [
+    {
+      capacity_provider = "FARGATE_SPOT"
+      weight            = 1
+      base              = null
+    }
+  ]
 }

@@ -8,7 +8,7 @@ Creates a service on ECS that has ssh open to enable tunneling.
 
 ```hcl
   module "ecs-bastion" {
-    source            = "git::ssh://git@gitlab.com/miquido/terraform/ecs-bastion.git?ref=tags/1.1.0"
+    source            = "git::ssh://git@gitlab.com/miquido/terraform/ecs-bastion.git?ref=tags/1.1.1"
     aws_region        = var.aws_region
     ecs_cluster_arn   = aws_ecs_cluster.main.arn
     environment       = var.environment
