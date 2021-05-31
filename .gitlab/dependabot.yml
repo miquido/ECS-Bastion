@@ -1,0 +1,14 @@
+version: 2
+updates:
+
+  # Maintain dependencies for terraform
+  - package-ecosystem: "terraform"
+    directory: "/"
+    assignees:
+      - "marek.moscichowski1"
+      - "krzysztof.kluska"
+      - "dawid.orzel"
+      - "tomasz.sojka"
+    schedule:
+      interval: "daily"
+    auto-merge: true

@@ -1,30 +1,19 @@
-variables:
-    DOCKER_DRIVER: "overlay2"
-    DOCKER_TLS_CERTDIR: "/certs"
+---
+include:
+  - remote: 'https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.17/workflow-default.yml'
+  - remote: 'https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.17/terraform-toolkit.yml'
+  - remote: 'https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.17/git-toolkit.yml'
 
-.job_template: &job_template
-    image: docker:20.10.6
-    before_script:
-        - docker version
-    tags:
-        - docker
-        - miquido
+get-latest-terraform:
+  extends: .get-latest-terraform
 
-stages:
-  - build
+check-formatting:
+  extends: .check-formatting
 
+validate:
+  extends: .validate
+  variables:
+    ENVIRONMENTS: examples/complete
 
-build:
-  <<: *job_template
-  environment:
-    name: prod
-  stage: build
-  script:
-    - cd docker
-    - docker build -t miquidocompany/aws-ecs-bastion:$CI_PIPELINE_ID-$CI_COMMIT_SHORT_SHA .
-    - echo $DOCKER_KEY | docker login --username $DOCKER_USER --password-stdin
-    - docker push miquidocompany/aws-ecs-bastion:$CI_PIPELINE_ID-$CI_COMMIT_SHORT_SHA
-  only:
-    - main
-  when: manual
-
+bump-tag:
+  extends: .bump_minor_tag
