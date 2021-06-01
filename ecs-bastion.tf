@@ -3,7 +3,7 @@ locals {
 }
 
 module "ecs-bastion-task-definition" {
-  source = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.46.2"
+  source = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.56.0"
 
   container_image  = var.container_image
   container_name   = "bastion"
