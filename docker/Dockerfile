@@ -1,11 +1,21 @@
-ARG ALPINE_TAG="3.10"
+ARG ALPINE_TAG="3.13.5"
 FROM alpine:${ALPINE_TAG}
 
-RUN apk add --no-cache tzdata bash vim jq \
-    openssh openssh-server \
+WORKDIR /
+EXPOSE 22
+
+RUN apk add --no-cache \
+    autossh \
     bind-tools \
-    openssl ca-certificates \
-    python3 autossh
+    ca-certificates \
+    jq \
+    openssh \
+    openssh-server \
+    openssl \
+    python3 \
+    tzdata && \
+    # Deactivate short moduli
+    awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.tmp && mv /etc/ssh/moduli.tmp /etc/ssh/moduli
 
 ENV GLIBC_VER=2.31-r0
 
@@ -23,7 +33,7 @@ RUN apk --no-cache add \
         glibc-i18n-${GLIBC_VER}.apk \
     && /usr/glibc-compat/bin/localedef -i en_US -f UTF-8 en_US.UTF-8 \
     && curl -sL https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip -o awscliv2.zip \
-    && unzip awscliv2.zip \
+    && unzip -q awscliv2.zip \
     && aws/install \
     && rm -rf \
         awscliv2.zip \
@@ -62,19 +72,15 @@ RUN mkdir -p /var/run/sshd && \
 COPY etc/motd /etc/motd
 COPY etc/sshd_config /etc/ssh/sshd_config
 
+SHELL ["/bin/ash", "-eo", "pipefail", "-c"]
 ARG TIMEZONE="Europe/Warsaw"
-RUN ln -snf /usr/share/zoneinfo/$TIMEZONE /etc/localtime && echo $TIMEZONE > /etc/timezone && date
-
-RUN addgroup -g 1000 -S bastion && \
-    adduser -u 1000 -S sshuser -G bastion -s /bin/bash && \
+RUN ln -snf "/usr/share/zoneinfo/${TIMEZONE}" /etc/localtime && echo "${TIMEZONE}" > /etc/timezone && \
+    addgroup -g 1000 -S bastion && \
+    adduser -u 1000 -S sshuser -G bastion -s /bin/sh && \
     echo "root:$(openssl rand -base64 24)" | chpasswd && \
     echo "sshuser:$(openssl rand -base64 24)" | chpasswd
 
 COPY startup.sh startup.sh
 COPY route53.json route53.json
-RUN chmod +x startup.sh
+
 CMD ["/startup.sh"]
-EXPOSE 22
-
-
-

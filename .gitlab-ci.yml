@@ -1,8 +1,27 @@
 ---
 include:
-  - remote: 'https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.17/workflow-default.yml'
-  - remote: 'https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.17/terraform-toolkit.yml'
-  - remote: 'https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.17/git-toolkit.yml'
+  - remote: "https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.25/workflow-default.yml"
+  - remote: "https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.25/terraform-toolkit.yml"
+  - remote: "https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.25/git-toolkit.yml"
+  - remote: "https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.25/docker-toolkit.yml"
+
+variables:
+  DOCKER_DRIVER: "overlay2"
+  DOCKER_TLS_CERTDIR: "/certs"
+  DOCKER_BUILD_IMAGE: "${REPOSITORY}/${NAMESPACE}/${CI_PROJECT_NAME}:${CI_PIPELINE_ID}-${CI_COMMIT_SHORT_SHA}"
+  NAMESPACE: "terraform"
+  REPOSITORY: "registry.miquido.net" # local miquido docker registry
+
+.job_template: &job_template
+  image: docker:20.10.6
+  tags:
+    - docker
+    - miquido
+
+stages:
+  - build
+  - test
+  - deploy
 
 get-latest-terraform:
   extends: .get-latest-terraform
@@ -17,3 +36,35 @@ validate:
 
 bump-tag:
   extends: .bump_minor_tag
+
+docker-lint:
+  variables:
+    DEFAULT_IGNORES: "DL3018 DL3008"
+    DOCKERFILE: "docker/Dockerfile"
+  extends: .docker-lint
+
+docker-build:
+  <<: *job_template
+  stage: build
+  script:
+    - docker build --tag="${DOCKER_BUILD_IMAGE}" docker/.
+    - docker push "${DOCKER_BUILD_IMAGE}"
+
+container-scanning:
+  extends: .container-scanning
+  stage: test
+
+push-docker-hub:
+  <<: *job_template
+  environment: prod
+  stage: deploy
+  variables:
+    DOCKER_HUB_IMAGE: "miquidocompany/aws-ecs-bastion:${CI_JOB_ID}-${CI_COMMIT_SHORT_SHA}"
+  script:
+    - docker pull "${DOCKER_BUILD_IMAGE}"
+    - docker tag "${DOCKER_BUILD_IMAGE}" "${DOCKER_HUB_IMAGE}"
+    - echo $DOCKER_KEY | docker login --username $DOCKER_USER --password-stdin
+    - docker push "${DOCKER_HUB_IMAGE}"
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
