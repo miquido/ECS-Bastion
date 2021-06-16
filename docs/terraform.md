@@ -13,8 +13,8 @@ No requirements.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ecs-bastion-task-definition"></a> [ecs-bastion-task-definition](#module\_ecs-bastion-task-definition) | git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=tags/0.46.2 |  |
-| <a name="module_ecs_alb_service_task"></a> [ecs\_alb\_service\_task](#module\_ecs\_alb\_service\_task) | git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.55.1 |  |
+| <a name="module_ecs-bastion-task-definition"></a> [ecs-bastion-task-definition](#module\_ecs-bastion-task-definition) | git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git | tags/0.57.0 |
+| <a name="module_ecs_alb_service_task"></a> [ecs\_alb\_service\_task](#module\_ecs\_alb\_service\_task) | git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git | tags/0.57.0 |
 
 ## Resources
 
@@ -31,7 +31,7 @@ No requirements.
 | Name | Description | Type | Default | Required |
 |------|-------------|------|---------|:--------:|
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | n/a | `string` | n/a | yes |
-| <a name="input_container_image"></a> [container\_image](#input\_container\_image) | docker image of bastion | `string` | `"miquidocompany/aws-ecs-bastion:300216988-7d78c44d"` | no |
+| <a name="input_container_image"></a> [container\_image](#input\_container\_image) | docker image of bastion | `string` | `"miquidocompany/aws-ecs-bastion:1354182621-5fb277f0"` | no |
 | <a name="input_ecs_cluster_arn"></a> [ecs\_cluster\_arn](#input\_ecs\_cluster\_arn) | ECS Cluster arn | `string` | n/a | yes |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment name | `string` | n/a | yes |
 | <a name="input_log_retention"></a> [log\_retention](#input\_log\_retention) | How long should logs be retained | `number` | `7` | no |

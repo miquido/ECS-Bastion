@@ -96,7 +96,7 @@ resource "aws_security_group" "ssh" {
 }
 
 module "ecs_alb_service_task" {
-  source                         = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.56.0"
+  source                         = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=tags/0.57.0"
   namespace                      = var.project
   stage                          = var.environment
   name                           = "bastion"
@@ -104,7 +104,7 @@ module "ecs_alb_service_task" {
   ecs_cluster_arn                = var.ecs_cluster_arn
   launch_type                    = "FARGATE"
   vpc_id                         = var.vpc_id
-  security_group_ids             = concat(var.security_groups, [aws_security_group.ssh.id])
+  security_groups                = concat(var.security_groups, [aws_security_group.ssh.id])
   subnet_ids                     = var.public_subnet_ids
   tags                           = var.tags
   ignore_changes_task_definition = true
