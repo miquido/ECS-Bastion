@@ -21,7 +21,6 @@ variables:
 stages:
   - build
   - test
-  - deploy
 
 get-latest-terraform:
   extends: .get-latest-terraform
@@ -57,7 +56,7 @@ container-scanning:
 push-docker-hub:
   <<: *job_template
   environment: prod
-  stage: deploy
+  stage: .post
   variables:
     DOCKER_HUB_IMAGE: "miquidocompany/aws-ecs-bastion:${CI_JOB_ID}-${CI_COMMIT_SHORT_SHA}"
   script:
