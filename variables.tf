@@ -69,3 +69,9 @@ variable "container_image" {
   type        = string
   description = "docker image of bastion"
 }
+
+variable "auto_deploy_new_task_versions" {
+  default     = false
+  type        = bool
+  description = "Set to true if there should be auto deploy of new task versions"
+}

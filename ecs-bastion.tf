@@ -107,7 +107,8 @@ module "ecs_alb_service_task" {
   security_groups                = concat(var.security_groups, [aws_security_group.ssh.id])
   subnet_ids                     = var.public_subnet_ids
   tags                           = var.tags
-  ignore_changes_task_definition = true
+  ignore_changes_task_definition = var.auto_deploy_new_task_versions == true ? false : true
+  force_new_deployment           = var.auto_deploy_new_task_versions == true ? true : false
   network_mode                   = "awsvpc"
   assign_public_ip               = true
   propagate_tags                 = "SERVICE"
