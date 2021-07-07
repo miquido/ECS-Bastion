@@ -11,4 +11,6 @@ updates:
       - "tomasz.sojka"
     schedule:
       interval: "daily"
+    ignore:
+      - dependency-name: "ecs_alb_service_task"
     auto-merge: true
