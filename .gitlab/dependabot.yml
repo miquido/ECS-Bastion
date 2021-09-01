@@ -14,3 +14,14 @@ updates:
     ignore:
       - dependency-name: "ecs_alb_service_task"
     auto-merge: true
+
+   - package-ecosystem: "docker"
+    directory: "/docker"
+    assignees:
+      - "marek.moscichowski1"
+      - "krzysztof.kluska"
+      - "dawid.orzel"
+      - "tomasz.sojka"
+    schedule:
+      interval: "daily"
+    auto-merge: true
