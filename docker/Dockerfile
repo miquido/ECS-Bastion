@@ -1,5 +1,4 @@
-ARG ALPINE_TAG="3.13.5"
-FROM alpine:${ALPINE_TAG}
+FROM alpine:3.14.2
 
 WORKDIR /
 EXPOSE 22
