@@ -1,9 +1,10 @@
 ---
 include:
-  - remote: "https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.25/workflow-default.yml"
-  - remote: "https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.25/terraform-toolkit.yml"
-  - remote: "https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.25/git-toolkit.yml"
-  - remote: "https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.25/docker-toolkit.yml"
+  - remote: "https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.43/docker-toolkit.yml"
+  - remote: 'https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.43/workflow-default.yml'
+  - remote: 'https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.43/terraform-toolkit.yml'
+  - remote: 'https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.43/git-toolkit.yml'
+
 
 variables:
   DOCKER_DRIVER: "overlay2"
@@ -29,7 +30,7 @@ check-formatting:
   extends: .check-formatting
 
 validate:
-  extends: .validate
+  extends: .validate-terraform
   variables:
     ENVIRONMENTS: examples/complete
 
