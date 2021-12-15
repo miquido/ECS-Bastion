@@ -8,7 +8,7 @@ Creates a service on ECS that has ssh open to enable tunneling.
 
 ```hcl
   module "ecs-bastion" {
-    source            = "git::ssh://git@gitlab.com/miquido/terraform/ecs-bastion.git?ref=tags/1.1.1"
+    source            = "git::ssh://git@gitlab.com/miquido/terraform/ecs-bastion.git?ref=1.1.17"
     aws_region        = var.aws_region
     ecs_cluster_arn   = aws_ecs_cluster.main.arn
     environment       = var.environment
@@ -29,7 +29,7 @@ Creates a service on ECS that has ssh open to enable tunneling.
       }
     ]
     tags              = var.tags
-}
+  }
 ```
 <!-- markdownlint-disable -->
 ## Makefile Targets
@@ -58,8 +58,8 @@ No requirements.
 
 | Name | Source | Version |
 |------|--------|---------|
-| <a name="module_ecs-bastion-task-definition"></a> [ecs-bastion-task-definition](#module\_ecs-bastion-task-definition) | git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git | tags/0.57.0 |
-| <a name="module_ecs_alb_service_task"></a> [ecs\_alb\_service\_task](#module\_ecs\_alb\_service\_task) | git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git | tags/0.57.0 |
+| <a name="module_ecs-bastion-task-definition"></a> [ecs-bastion-task-definition](#module\_ecs-bastion-task-definition) | git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git | 0.58.1 |
+| <a name="module_ecs_alb_service_task"></a> [ecs\_alb\_service\_task](#module\_ecs\_alb\_service\_task) | git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git | 0.57.0 |
 
 ## Resources
 
@@ -134,4 +134,3 @@ Copyright © 2017-2021 [Miquido](https://miquido.com)
   [gitlab]: https://gitlab.com/miquido
   [github]: https://github.com/miquido
   [bitbucket]: https://bitbucket.org/miquido
-

@@ -7,7 +7,7 @@ description: |-
 usage: |-
   ```hcl
     module "ecs-bastion" {
-      source            = "git::ssh://git@gitlab.com/miquido/terraform/ecs-bastion.git?ref=tags/1.1.1"
+      source            = "git::ssh://git@gitlab.com/miquido/terraform/ecs-bastion.git?ref=1.1.17"
       aws_region        = var.aws_region
       ecs_cluster_arn   = aws_ecs_cluster.main.arn
       environment       = var.environment
@@ -28,7 +28,7 @@ usage: |-
         }
       ]
       tags              = var.tags
-  }
+    }
   ```
 
 include:
