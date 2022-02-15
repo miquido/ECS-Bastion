@@ -46,13 +46,16 @@ Available targets:
 <!-- markdownlint-disable -->
 ## Requirements
 
-No requirements.
+| Name | Version |
+|------|---------|
+| <a name="requirement_terraform"></a> [terraform](#requirement\_terraform) | >= 0.13 |
+| <a name="requirement_aws"></a> [aws](#requirement\_aws) | ~> 3.0 |
 
 ## Providers
 
 | Name | Version |
 |------|---------|
-| <a name="provider_aws"></a> [aws](#provider\_aws) | n/a |
+| <a name="provider_aws"></a> [aws](#provider\_aws) | ~> 3.0 |
 
 ## Modules
 
@@ -77,7 +80,7 @@ No requirements.
 |------|-------------|------|---------|:--------:|
 | <a name="input_auto_deploy_new_task_versions"></a> [auto\_deploy\_new\_task\_versions](#input\_auto\_deploy\_new\_task\_versions) | Set to true if there should be auto deploy of new task versions | `bool` | `false` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | n/a | `string` | n/a | yes |
-| <a name="input_container_image"></a> [container\_image](#input\_container\_image) | docker image of bastion | `string` | `"miquidocompany/aws-ecs-bastion:1354182621-5fb277f0"` | no |
+| <a name="input_container_image"></a> [container\_image](#input\_container\_image) | docker image of bastion | `string` | `"miquidocompany/aws-ecs-bastion:1887008228-dc79813b"` | no |
 | <a name="input_ecs_cluster_arn"></a> [ecs\_cluster\_arn](#input\_ecs\_cluster\_arn) | ECS Cluster arn | `string` | n/a | yes |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment name | `string` | n/a | yes |
 | <a name="input_log_retention"></a> [log\_retention](#input\_log\_retention) | How long should logs be retained | `number` | `7` | no |
@@ -115,7 +118,7 @@ No outputs.
 
 ## Copyright
 
-Copyright © 2017-2021 [Miquido](https://miquido.com)
+Copyright © 2017-2022 [Miquido](https://miquido.com)
 
 
 
@@ -134,3 +137,4 @@ Copyright © 2017-2021 [Miquido](https://miquido.com)
   [gitlab]: https://gitlab.com/miquido
   [github]: https://github.com/miquido
   [bitbucket]: https://bitbucket.org/miquido
+
