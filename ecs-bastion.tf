@@ -96,7 +96,7 @@ resource "aws_security_group" "ssh" {
 }
 
 module "ecs_alb_service_task" {
-  source                         = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=0.57.0"
+  source                         = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=0.64.0"
   namespace                      = var.project
   stage                          = var.environment
   name                           = "bastion"
