@@ -1,6 +1,5 @@
 version: 2
 updates:
-
   # Maintain dependencies for terraform
   - package-ecosystem: "terraform"
     directory: "/"
@@ -11,11 +10,9 @@ updates:
       - "tomasz.sojka"
     schedule:
       interval: "daily"
-    ignore:
-      - dependency-name: "ecs_alb_service_task"
     auto-merge: true
 
-   - package-ecosystem: "docker"
+  - package-ecosystem: "docker"
     directory: "/docker"
     assignees:
       - "marek.moscichowski1"
