@@ -20,6 +20,15 @@ RUN apk add --no-cache \
 
 ENV GLIBC_VER=2.31-r0
 
+RUN apk add --no-cache \
+              curl \
+              jq \
+              python3 \
+              py3-pip \
+            && pip3 install --upgrade pip \
+            && pip3 install --no-cache-dir \
+                awscli \
+            && rm -rf /var/cache/apk/*
 # # install glibc compatibility for alpine
 # RUN apk --no-cache add \
 #         binutils \

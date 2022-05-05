@@ -121,7 +121,7 @@ module "ecs_alb_service_task" {
 
   capacity_provider_strategies = [
     {
-      capacity_provider = "FARGATE_SPOT"
+      capacity_provider = "FARGATE"
       weight            = 1
       base              = null
     }
