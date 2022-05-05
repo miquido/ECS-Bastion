@@ -50,9 +50,9 @@ docker-lint:
 #    - docker build --tag="${DOCKER_BUILD_IMAGE}" docker/.
 #    - docker push "${DOCKER_BUILD_IMAGE}"
 
-container-scanning:
-  extends: .container-scanning
-  stage: test
+#container-scanning:
+#  extends: .container-scanning
+#  stage: test
 
 miquido-ci-schema-validation:
   stage: test
