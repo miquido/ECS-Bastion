@@ -4,6 +4,7 @@ WORKDIR /
 EXPOSE 22
 
 RUN apk add --no-cache \
+    aws-cli \
     curl \
     autossh \
     bind-tools \
@@ -17,9 +18,7 @@ RUN apk add --no-cache \
     # update dependencies that have known vulnerabilities
     apk add --no-cache --upgrade busybox libcrypto1.1 libretls libssl1.1 ssl_client zlib && \
     # Deactivate short moduli
-    awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.tmp && mv /etc/ssh/moduli.tmp /etc/ssh/moduli
-
-RUN apk add --no-cache aws-cli \
+    awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.tmp && mv /etc/ssh/moduli.tmp /etc/ssh/moduli \
     && rm -rf /var/cache/apk/*
 
 ARG SSH_HOST_KEY_RSA=""
