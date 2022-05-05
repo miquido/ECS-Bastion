@@ -104,6 +104,5 @@ push:
     - miquido
     - docker
   rules:
-    - when: manual
-#    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-#      when: manual
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
