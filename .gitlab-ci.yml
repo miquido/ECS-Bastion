@@ -33,26 +33,19 @@ validate:
   extends: .validate-terraform
   variables:
     ENVIRONMENTS: examples/complete
-#
-#bump-tag:
-#  extends: .bump_minor_tag
+
+bump-tag:
+  extends: .bump_minor_tag
 
 docker-lint:
   variables:
     DEFAULT_IGNORES: "DL3018 DL3008"
     DOCKERFILE: "docker/Dockerfile"
   extends: .docker-lint
-#
-#docker-build:
-#  <<: *job_template
-#  stage: build
-#  script:
-#    - docker build --tag="${DOCKER_BUILD_IMAGE}" docker/.
-#    - docker push "${DOCKER_BUILD_IMAGE}"
 
-#container-scanning:
-#  extends: .container-scanning
-#  stage: test
+container-scanning:
+  extends: .container-scanning
+  stage: test
 
 miquido-ci-schema-validation:
   stage: test
@@ -61,8 +54,6 @@ miquido-ci-schema-validation:
 build:
   image: jdrouet/docker-with-buildx:stable
   stage: build
-  environment:
-    name: prod
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - docker buildx create --use
