@@ -122,7 +122,12 @@ module "ecs_alb_service_task" {
   capacity_provider_strategies = [
     {
       capacity_provider = "FARGATE"
-      weight            = 1
+      weight            = var.use_spot == false ? 1 : 0
+      base              = null
+    },
+    {
+      capacity_provider = "FARGATE_SPOT"
+      weight            = var.use_spot == true ? 1 : 0
       base              = null
     }
   ]
@@ -130,7 +135,7 @@ module "ecs_alb_service_task" {
   runtime_platform = [
     {
       operating_system_family = "LINUX"
-      cpu_architecture        = "ARM64"
+      cpu_architecture        = var.use_spot == true ? "X86_64" : "ARM64"
     }
   ]
 }

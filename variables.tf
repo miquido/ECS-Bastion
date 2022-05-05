@@ -81,3 +81,9 @@ variable "ignore_changes_desired_count" {
   type        = bool
   description = "If yes than terraform will not try to update current desired count of the task"
 }
+
+variable "use_spot" {
+  default     = true
+  type        = bool
+  description = "Set if task should run on Fargate SPOT"
+}
