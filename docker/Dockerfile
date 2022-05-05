@@ -20,8 +20,7 @@ RUN apk add --no-cache \
 
 ENV GLIBC_VER=2.31-r0
 
-RUN apk add --no-cache \ awscli \
-    && rm -rf /var/cache/apk/*
+RUN apk add aws-cli
 # # install glibc compatibility for alpine
 # RUN apk --no-cache add \
 #         binutils \
