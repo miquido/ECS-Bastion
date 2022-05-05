@@ -20,7 +20,7 @@ RUN apk add --no-cache \
 
 ENV GLIBC_VER=2.31-r0
 
-RUN RUN apk add --no-cache \
+RUN apk add --no-cache \
         python3 \
         py3-pip \
     && pip3 install --upgrade pip \
