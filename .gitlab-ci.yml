@@ -44,6 +44,8 @@ docker-lint:
   extends: .docker-lint
 
 container-scanning:
+  before_script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
   extends: .container-scanning
   stage: test
 
