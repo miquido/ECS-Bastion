@@ -8,7 +8,7 @@ Creates a service on ECS that has ssh open to enable tunneling.
 
 ```hcl
   module "ecs-bastion" {
-    source            = "git::ssh://git@gitlab.com/miquido/terraform/ecs-bastion.git?ref=1.1.17"
+    source            = "git::ssh://git@gitlab.com/miquido/terraform/ecs-bastion.git?ref=1.1.23"
     aws_region        = var.aws_region
     ecs_cluster_arn   = aws_ecs_cluster.main.arn
     environment       = var.environment
@@ -80,7 +80,7 @@ Available targets:
 |------|-------------|------|---------|:--------:|
 | <a name="input_auto_deploy_new_task_versions"></a> [auto\_deploy\_new\_task\_versions](#input\_auto\_deploy\_new\_task\_versions) | Set to true if there should be auto deploy of new task versions | `bool` | `false` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | n/a | `string` | n/a | yes |
-| <a name="input_container_image"></a> [container\_image](#input\_container\_image) | docker image of bastion | `string` | `"miquidocompany/aws-ecs-bastion:1887008228-dc79813b"` | no |
+| <a name="input_container_image"></a> [container\_image](#input\_container\_image) | docker image of bastion | `string` | `"miquidocompany/aws-ecs-bastion:2415951558-29fe85f8"` | no |
 | <a name="input_ecs_cluster_arn"></a> [ecs\_cluster\_arn](#input\_ecs\_cluster\_arn) | ECS Cluster arn | `string` | n/a | yes |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment name | `string` | n/a | yes |
 | <a name="input_log_retention"></a> [log\_retention](#input\_log\_retention) | How long should logs be retained | `number` | `7` | no |
