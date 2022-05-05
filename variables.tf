@@ -75,3 +75,9 @@ variable "auto_deploy_new_task_versions" {
   type        = bool
   description = "Set to true if there should be auto deploy of new task versions"
 }
+
+variable "ignore_changes_desired_count" {
+  default = true
+  type    = bool
+  description = "If yes than terraform will not try to update current desired count of the task"
+}

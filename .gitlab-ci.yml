@@ -8,7 +8,7 @@ include:
 variables:
   DOCKER_DRIVER: "overlay2"
   DOCKER_TLS_CERTDIR: "/certs"
-  DOCKER_BUILD_IMAGE: "${REPOSITORY}/${NAMESPACE}/${CI_PROJECT_NAME}:${CI_PIPELINE_ID}-${CI_COMMIT_SHORT_SHA}"
+  DOCKER_BUILD_IMAGE: $CI_REGISTRY_IMAGE:$CI_PIPELINE_IID
   NAMESPACE: "terraform"
   REPOSITORY: "registry.miquido.net" # local miquido docker registry
 
@@ -32,9 +32,9 @@ validate:
   extends: .validate-terraform
   variables:
     ENVIRONMENTS: examples/complete
-
-bump-tag:
-  extends: .bump_minor_tag
+#
+#bump-tag:
+#  extends: .bump_minor_tag
 
 docker-lint:
   variables:
@@ -57,17 +57,50 @@ miquido-ci-schema-validation:
   stage: test
   extends: .miquido-ci-schema-validation
 
-push-docker-hub:
-  <<: *job_template
-  environment: prod
-  stage: .post
+build:
+  image: jdrouet/docker-with-buildx:stable
+  stage: build
+  environment:
+    name: prod
+  script:
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
+    - docker buildx create --use
+    - docker buildx build --push --platform linux/arm/v7,linux/arm64/v8,linux/386,linux/amd64 --tag $DOCKER_BUILD_IMAGE .
+  tags:
+    - docker
+    - miquido
+
+push:
+  environment:
+    name: prod
+  stage: push
+  image: docker:20.10.14
   variables:
     DOCKER_HUB_IMAGE: "miquidocompany/aws-ecs-bastion:${CI_JOB_ID}-${CI_COMMIT_SHORT_SHA}"
+  before_script:
+    - |
+      apk add --no-cache \
+              curl \
+              jq \
+              python3 \
+              py3-pip \
+            && pip3 install --upgrade pip \
+            && pip3 install --no-cache-dir \
+                awscli \
+            && rm -rf /var/cache/apk/*
+    - curl -L https://github.com/regclient/regclient/releases/latest/download/regctl-linux-amd64 > regctl
+    - chmod 755 regctl
+    - mkdir ~/.docker
   script:
-    - docker pull "${DOCKER_BUILD_IMAGE}"
-    - docker tag "${DOCKER_BUILD_IMAGE}" "${DOCKER_HUB_IMAGE}"
+    - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
     - echo $DOCKER_KEY | docker login --username $DOCKER_USER --password-stdin
-    - docker push "${DOCKER_HUB_IMAGE}"
+    - ./regctl image inspect $DOCKER_BUILD_IMAGE
+    - ./regctl image copy $DOCKER_BUILD_IMAGE $DOCKER_HUB_IMAGE
+    - ./regctl image inspect $DOCKER_HUB_IMAGE
+  tags:
+    - miquido
+    - docker
   rules:
-    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
-      when: manual
+    - when: manual
+#    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+#      when: manual
