@@ -21,6 +21,7 @@ variables:
 stages:
   - build
   - test
+  - push
 
 get-latest-terraform:
   extends: .get-latest-terraform
