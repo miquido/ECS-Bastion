@@ -4,7 +4,7 @@ WORKDIR /
 EXPOSE 22
 
 RUN apk add --no-cache \
-    curl
+    curl \
     autossh \
     bind-tools \
     ca-certificates \
