@@ -94,7 +94,7 @@ push:
     - mkdir ~/.docker
   script:
     - docker login -u $CI_REGISTRY_USER -p $CI_REGISTRY_PASSWORD $CI_REGISTRY
-    - echo $DOCKER_KEY | docker login --username $DOCKER_USER --password-stdin
+    - docker login -u $DOCKER_USER -p $DOCKER_KEY
     - ./regctl image inspect $DOCKER_BUILD_IMAGE
     - ./regctl image copy $DOCKER_BUILD_IMAGE $DOCKER_HUB_IMAGE
     - ./regctl image inspect $DOCKER_HUB_IMAGE
