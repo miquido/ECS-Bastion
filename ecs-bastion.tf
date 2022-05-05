@@ -32,6 +32,7 @@ module "ecs-bastion-task-definition" {
       value = local.ssm_pubkeys
     }
   ]
+
 }
 
 locals {
@@ -96,7 +97,7 @@ resource "aws_security_group" "ssh" {
 }
 
 module "ecs_alb_service_task" {
-  source                         = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=0.57.0"
+  source                         = "git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git?ref=0.64.0"
   namespace                      = var.project
   stage                          = var.environment
   name                           = "bastion"
@@ -104,7 +105,7 @@ module "ecs_alb_service_task" {
   ecs_cluster_arn                = var.ecs_cluster_arn
   launch_type                    = "FARGATE"
   vpc_id                         = var.vpc_id
-  security_groups                = concat(var.security_groups, [aws_security_group.ssh.id])
+  security_group_ids             = concat(var.security_groups, [aws_security_group.ssh.id])
   subnet_ids                     = var.public_subnet_ids
   tags                           = var.tags
   ignore_changes_task_definition = var.auto_deploy_new_task_versions == true ? false : true
@@ -113,15 +114,28 @@ module "ecs_alb_service_task" {
   assign_public_ip               = true
   propagate_tags                 = "SERVICE"
   desired_count                  = 1
+  ignore_changes_desired_count   = var.ignore_changes_desired_count
   task_memory                    = 512
   task_cpu                       = 256
   exec_enabled                   = true
 
   capacity_provider_strategies = [
     {
-      capacity_provider = "FARGATE_SPOT"
-      weight            = 1
+      capacity_provider = "FARGATE"
+      weight            = var.use_spot == false ? 1 : 0
       base              = null
+    },
+    {
+      capacity_provider = "FARGATE_SPOT"
+      weight            = var.use_spot == true ? 1 : 0
+      base              = null
+    }
+  ]
+
+  runtime_platform = [
+    {
+      operating_system_family = "LINUX"
+      cpu_architecture        = var.use_spot == true ? "X86_64" : "ARM64"
     }
   ]
 }

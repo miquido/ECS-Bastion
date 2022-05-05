@@ -65,7 +65,7 @@ variable "route53_zone_id" {
 }
 
 variable "container_image" {
-  default     = "miquidocompany/aws-ecs-bastion:2415951558-29fe85f8"
+  default     = "miquidocompany/aws-ecs-bastion:2418063322-b667be3b"
   type        = string
   description = "docker image of bastion"
 }
@@ -74,4 +74,16 @@ variable "auto_deploy_new_task_versions" {
   default     = false
   type        = bool
   description = "Set to true if there should be auto deploy of new task versions"
+}
+
+variable "ignore_changes_desired_count" {
+  default     = true
+  type        = bool
+  description = "If yes than terraform will not try to update current desired count of the task"
+}
+
+variable "use_spot" {
+  default     = true
+  type        = bool
+  description = "Set if task should run on Fargate SPOT"
 }
