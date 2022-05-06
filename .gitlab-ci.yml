@@ -84,18 +84,15 @@ miquido-ci-schema-validation:
 
 .gitlab-dockerhub-push:
   extends: .gitlab-push
-  variables:
-    # REQUIRED
-    DOCKER_IMAGE_DESTINATION: ""
   script:
-   - \[ ! -n "$DOCKER_HUB_IMAGE" \] && echo "Missing DOCKER_HUB_IMAGE variable. Exiting" && exit 1
+   - \[ ! -n "$DOCKER_IMAGE_DESTINATION" \] && echo "Missing DOCKER_IMAGE_DESTINATION variable. Exiting" && exit 1
    - !reference [.dockerhub-login, script]
    - !reference [.gitlab-push, script]
 
 .gitlab-ecr-push:
   extends: .gitlab-push
   script:
-   - \[ ! -n "$DOCKER_HUB_IMAGE" \] && echo "Missing DOCKER_HUB_IMAGE variable. Exiting" && exit 1
+   - \[ ! -n "$DOCKER_IMAGE_DESTINATION" \] && echo "Missing DOCKER_IMAGE_DESTINATION variable. Exiting" && exit 1
    - !reference [.ecr-login, script]
    - !reference [.gitlab-push, script]
 
@@ -103,6 +100,7 @@ miquido-ci-schema-validation:
 .gitlab-push:
   image: docker:20.10.14
   variables:
+    # REQUIRED
     DOCKER_IMAGE_DESTINATION: ""
   before_script:
     - |
