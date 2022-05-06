@@ -120,7 +120,7 @@ miquido-ci-schema-validation:
     - !reference [.gitlab-docker-login, script]
     - ./regctl image inspect $DOCKER_BUILD_IMAGE
     - ./regctl image copy $DOCKER_BUILD_IMAGE $DOCKER_IMAGE_DESTINATION
-    - ./regctl image inspect $DOCKER_HUB_IMAGE
+    - ./regctl image inspect $DOCKER_IMAGE_DESTINATION
   tags:
     - miquido
     - docker
