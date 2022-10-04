@@ -1,0 +1,17 @@
+{
+  "version": "0",
+  "id": "43925dcc-7611-b727-b3b5-9aa7f8ce19a9",
+  "detail-type": "Parameter Store Change",
+  "source": "aws.ssm",
+  "account": "497964514030",
+  "time": "2022-10-04T12:13:41Z",
+  "region": "eu-west-1",
+  "resources": [
+    "arn:aws:ssm:eu-west-1:497964514030:parameter/miquido-showcase/prod/bastion/pubkeys"
+  ],
+  "detail": {
+    "name": "/miquido-showcase/prod/bastion/pubkeys",
+    "type": "String",
+    "operation": "Update"
+  }
+}

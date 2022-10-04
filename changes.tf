@@ -30,6 +30,7 @@ resource "aws_lambda_function" "ssm_changed_notification" {
     variables = {
       CLUSTER      = var.ecs_cluster_arn
       SERVICE_NAME = module.ecs_alb_service_task.service_name
+      SSM_ARN = aws_ssm_parameter.bastion_pubkeys.arn
     }
   }
   depends_on = [
