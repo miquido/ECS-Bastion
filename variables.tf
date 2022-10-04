@@ -87,3 +87,9 @@ variable "use_spot" {
   type        = bool
   description = "Set if task should run on Fargate SPOT"
 }
+
+variable "restart_on_ssh_keys_change" {
+  default     = true
+  type        = bool
+  description = "Restart bastion ecs task when ssh keys are changed"
+}
