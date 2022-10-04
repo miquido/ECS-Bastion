@@ -1,9 +1,17 @@
+import json
 import os
 
 import boto3
 
 
 def lambda_handler(event, context):
+  ssm_name = os.getenv('SSM_ARN')
+
+  ssm_changed = event['resources']
+
+  if ssm_name not in ssm_changed:
+    return
+
   cluster = os.getenv('CLUSTER')
   service_name = os.getenv('SERVICE_NAME')
 
@@ -23,5 +31,13 @@ def lambda_handler(event, context):
     )
     print(response)
 
+
+def mock_message(file_name):
+  parent_dir = os.path.dirname(os.path.abspath(__file__))
+
+  with open(f'{parent_dir}/fixtures/{file_name}.json', 'r') as f:
+    return json.load(f)
+
+
 if __name__ == '__main__':
-  lambda_handler(None, None)
+  lambda_handler(mock_message('ssm_changed'), None)
