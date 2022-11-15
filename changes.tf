@@ -1,5 +1,5 @@
 locals {
-  ssm_changed_lambda_name         = "${var.environment}-${var.project}-ssm-changed"
+  ssm_changed_lambda_name         = "${var.project}-${var.environment}-ssm-changed"
   ssm_changed_lambda_zip_filename = "${path.module}/ssm_changed_notification.zip"
   cluster_name                    = split("/", var.ecs_cluster_arn)[1]
 }
