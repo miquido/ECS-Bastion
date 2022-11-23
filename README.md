@@ -93,7 +93,7 @@ Available targets:
 |------|-------------|------|---------|:--------:|
 | <a name="input_auto_deploy_new_task_versions"></a> [auto\_deploy\_new\_task\_versions](#input\_auto\_deploy\_new\_task\_versions) | Set to true if there should be auto deploy of new task versions | `bool` | `false` | no |
 | <a name="input_aws_region"></a> [aws\_region](#input\_aws\_region) | n/a | `string` | n/a | yes |
-| <a name="input_container_image"></a> [container\_image](#input\_container\_image) | docker image of bastion | `string` | `"miquidocompany/aws-ecs-bastion:2418063322-b667be3b"` | no |
+| <a name="input_container_image"></a> [container\_image](#input\_container\_image) | docker image of bastion | `string` | `"miquidocompany/aws-ecs-bastion:3366724320-e86f637e"` | no |
 | <a name="input_ecs_cluster_arn"></a> [ecs\_cluster\_arn](#input\_ecs\_cluster\_arn) | ECS Cluster arn | `string` | n/a | yes |
 | <a name="input_environment"></a> [environment](#input\_environment) | Environment name | `string` | n/a | yes |
 | <a name="input_ignore_changes_desired_count"></a> [ignore\_changes\_desired\_count](#input\_ignore\_changes\_desired\_count) | If yes than terraform will not try to update current desired count of the task | `bool` | `true` | no |
