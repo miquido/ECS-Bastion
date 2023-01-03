@@ -1,9 +1,7 @@
 #!/usr/bin/env sh
 
-AUTHORIZED_KEYS=$(aws ssm get-parameter --name "$SSM_PUBKEYS" | jq -r '.Parameter.Value')
-
 mkdir -p /home/sshuser/.ssh && \
-    echo "$AUTHORIZED_KEYS" > /home/sshuser/.ssh/authorized_keys && \
+    aws s3 cp "s3://$KEYS_BUCKET/keys.txt" ./ssh/authorized_keys && \
     chmod 400 /home/sshuser/.ssh/authorized_keys && \
     chown -R sshuser:bastion /home/sshuser/.ssh
 

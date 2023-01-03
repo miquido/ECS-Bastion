@@ -1,7 +1,3 @@
-locals {
-  ssm_pubkeys = "/${var.project}/${var.environment}/bastion/pubkeys"
-}
-
 module "ecs-bastion-task-definition" {
   source = "git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git?ref=0.58.1"
 
@@ -28,8 +24,8 @@ module "ecs-bastion-task-definition" {
       value = var.route53_zone_id
     },
     {
-      name  = "SSM_PUBKEYS"
-      value = local.ssm_pubkeys
+      name  = "KEYS_BUCKET"
+      value = module.bastion_pubkeys.bucket_id
     }
   ]
 
@@ -64,20 +60,35 @@ data "aws_iam_policy_document" "bastion_policy" {
 
   statement {
     actions = [
-      "ssm:GetParameter"
+      "s3:GetObject"
     ]
 
     resources = [
-      aws_ssm_parameter.bastion_pubkeys.arn,
+      "${module.bastion_pubkeys.bucket_arn}*",
     ]
   }
 }
 
-resource "aws_ssm_parameter" "bastion_pubkeys" {
-  name  = local.ssm_pubkeys
-  type  = "String"
-  value = var.public_ssh_keys
+module "bastion_pubkeys" {
+  source  = "cloudposse/s3-bucket/aws"
+  version = "2.0.1"
+
+  acl                          = "private"
+  enabled                      = true
+  versioning_enabled           = false
+  name                         = "bastion-keys"
+  stage                        = var.environment
+  namespace                    = var.project
+  allow_encrypted_uploads_only = false
+  sse_algorithm                = "AES256"
 }
+
+resource "aws_s3_object" "object" {
+  bucket  = module.bastion_pubkeys.bucket_id
+  key     = "keys.txt"
+  content = var.public_ssh_keys
+}
+
 
 resource "aws_security_group" "ssh" {
   name        = "${var.project}-${var.environment}-bastion-ssh-whitelist"

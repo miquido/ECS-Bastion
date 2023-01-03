@@ -5,11 +5,8 @@ import boto3
 
 
 def lambda_handler(event, context):
-  ssm_name = os.getenv('SSM_ARN')
-
-  ssm_changed = event['resources']
-
-  if ssm_name not in ssm_changed:
+  keys = next(filter(lambda x: x == 'keys.txt', map(lambda x: x['s3']['object']['key'], event['Records'])), None)
+  if keys is None:
     return
 
   cluster = os.getenv('CLUSTER')

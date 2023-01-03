@@ -1,17 +1,38 @@
 {
-  "version": "0",
-  "id": "43925dcc-7611-b727-b3b5-9aa7f8ce19a9",
-  "detail-type": "Parameter Store Change",
-  "source": "aws.ssm",
-  "account": "497964514030",
-  "time": "2022-10-04T12:13:41Z",
-  "region": "eu-west-1",
-  "resources": [
-    "arn:aws:ssm:eu-west-1:497964514030:parameter/miquido-showcase/prod/bastion/pubkeys"
-  ],
-  "detail": {
-    "name": "/miquido-showcase/prod/bastion/pubkeys",
-    "type": "String",
-    "operation": "Update"
-  }
+  "Records": [
+    {
+      "eventVersion": "2.1",
+      "eventSource": "aws:s3",
+      "awsRegion": "eu-west-1",
+      "eventTime": "2023-01-03T10:39:51.116Z",
+      "eventName": "ObjectCreated:Put",
+      "userIdentity": {
+        "principalId": "AWS:AROATSXV7AA5R5KPXJ5NJ:aws-go-sdk-1672742389804308000"
+      },
+      "requestParameters": {
+        "sourceIPAddress": "178.43.248.210"
+      },
+      "responseElements": {
+        "x-amz-request-id": "ED57AK915NSK0QFM",
+        "x-amz-id-2": "E2k7Ig8YmbYE5gDZTwVRqzCp4Vu/HW3Bb83pKIshtxM82ycdUDNj+JUV/OezSA/tcwi/2Jc/EYetta/Ua7fhd070FmsDCPD9"
+      },
+      "s3": {
+        "s3SchemaVersion": "1.0",
+        "configurationId": "tf-s3-lambda-20230103103433296300000001",
+        "bucket": {
+          "name": "ecs-workshop-test-bastion-keys",
+          "ownerIdentity": {
+            "principalId": "A16F42IHO6LFMH"
+          },
+          "arn": "arn:aws:s3:::ecs-workshop-test-bastion-keys"
+        },
+        "object": {
+          "key": "keys.txt",
+          "size": 838,
+          "eTag": "a76d6b796b3b1574ab9b672990c43c53",
+          "sequencer": "0063B405F7145126AE"
+        }
+      }
+    }
+  ]
 }
