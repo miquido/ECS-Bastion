@@ -65,7 +65,7 @@ variable "route53_zone_id" {
 }
 
 variable "container_image" {
-  default     = "miquidocompany/aws-ecs-bastion:3366724320-e86f637e"
+  default     = "miquidocompany/aws-ecs-bastion:3546223165-596f5310"
   type        = string
   description = "docker image of bastion"
 }
