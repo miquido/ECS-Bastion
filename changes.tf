@@ -108,6 +108,7 @@ data "aws_iam_policy_document" "role_pubkeys_changed_notification" {
 }
 
 resource "aws_lambda_permission" "s3-event-allow_bucket" {
+  count         = var.restart_on_ssh_keys_change ? 1 : 0
   statement_id  = "AllowExecutionFromS3Bucket"
   action        = "lambda:InvokeFunction"
   function_name = aws_lambda_function.pubkeys_changed_notification.arn
@@ -116,6 +117,7 @@ resource "aws_lambda_permission" "s3-event-allow_bucket" {
 }
 
 resource "aws_s3_bucket_notification" "bucket_notification" {
+  count  = var.restart_on_ssh_keys_change ? 1 : 0
   bucket = module.bastion_pubkeys.bucket_id
 
   lambda_function {
