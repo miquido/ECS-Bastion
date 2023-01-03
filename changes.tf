@@ -1,5 +1,5 @@
 locals {
-  pubkeys_changed_lambda_name         = "${var.environment}-${var.project}-ssm-changed"
+  pubkeys_changed_lambda_name         = "${var.environment}-${var.project}-pubkeys-changed"
   pubkeys_changed_lambda_zip_filename = "${path.module}/pubkeys_changed_notification.zip"
   cluster_name                        = split("/", var.ecs_cluster_arn)[1]
 }

@@ -1,7 +1,7 @@
 #!/usr/bin/env sh
 
 mkdir -p /home/sshuser/.ssh && \
-    aws s3 cp "s3://$KEYS_BUCKET/keys.txt" ./ssh/authorized_keys && \
+    aws s3 cp "s3://$KEYS_BUCKET/keys.txt" /home/sshuser/.ssh/authorized_keys && \
     chmod 400 /home/sshuser/.ssh/authorized_keys && \
     chown -R sshuser:bastion /home/sshuser/.ssh
 

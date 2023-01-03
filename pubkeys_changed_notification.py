@@ -24,7 +24,7 @@ def lambda_handler(event, context):
     response = client.stop_task(
       cluster=cluster,
       task=task,
-      reason='SSM changed'
+      reason='Pubkeys changed'
     )
     print(response)
 
@@ -37,4 +37,4 @@ def mock_message(file_name):
 
 
 if __name__ == '__main__':
-  lambda_handler(mock_message('ssm_changed'), None)
+  lambda_handler(mock_message('s3_changed'), None)
