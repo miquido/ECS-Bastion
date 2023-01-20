@@ -67,7 +67,7 @@ push:
   environment:
     name: prod
   variables:
-    DOCKER_IMAGE_DESTINATION: "miquidocompany/aws-ecs-bastion:${CI_JOB_ID}-${CI_COMMIT_SHORT_SHA}"
+    DOCKER_IMAGE_DESTINATION: "miquido/aws-ecs-bastion:${CI_JOB_ID}-${CI_COMMIT_SHORT_SHA}"
   rules:
     - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
       when: manual
