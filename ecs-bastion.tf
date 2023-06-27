@@ -84,9 +84,9 @@ module "bastion_pubkeys" {
 }
 
 resource "aws_s3_object" "object" {
-  bucket  = module.bastion_pubkeys.bucket_id
-  key     = "keys.txt"
-  content = var.public_ssh_keys
+  bucket                 = module.bastion_pubkeys.bucket_id
+  key                    = "keys.txt"
+  content                = var.public_ssh_keys
   server_side_encryption = "AES256"
 }
 
