@@ -64,7 +64,7 @@ Available targets:
 |------|--------|---------|
 | <a name="module_bastion_pubkeys"></a> [bastion\_pubkeys](#module\_bastion\_pubkeys) | cloudposse/s3-bucket/aws | 2.0.1 |
 | <a name="module_ecs-bastion-task-definition"></a> [ecs-bastion-task-definition](#module\_ecs-bastion-task-definition) | git::https://github.com/cloudposse/terraform-aws-ecs-container-definition.git | 0.58.1 |
-| <a name="module_ecs_alb_service_task"></a> [ecs\_alb\_service\_task](#module\_ecs\_alb\_service\_task) | git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git | 0.66.4 |
+| <a name="module_ecs_alb_service_task"></a> [ecs\_alb\_service\_task](#module\_ecs\_alb\_service\_task) | git::https://github.com/cloudposse/terraform-aws-ecs-alb-service-task.git | 0.71.0 |
 
 ## Resources
 
