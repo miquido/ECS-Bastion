@@ -71,7 +71,7 @@ data "aws_iam_policy_document" "bastion_policy" {
 
 module "bastion_pubkeys" {
   source  = "cloudposse/s3-bucket/aws"
-  version = "2.0.1"
+  version = "4.2.0"
 
   acl                          = "private"
   enabled                      = true
