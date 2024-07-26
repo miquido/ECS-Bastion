@@ -61,6 +61,7 @@ build:
   stage: build
   variables:
     DOCKERFILE_PATH: docker/.
+    PLATFORMS: linux/arm/v7,linux/arm64/v8,linux/amd64
 
 push:
   extends: .gitlab-dockerhub-push
