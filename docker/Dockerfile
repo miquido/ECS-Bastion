@@ -1,4 +1,4 @@
-FROM alpine:3.17.0
+FROM alpine:3.20.2
 
 WORKDIR /
 EXPOSE 22
@@ -16,7 +16,7 @@ RUN apk add --no-cache \
     python3 \
     tzdata && \
     # update dependencies that have known vulnerabilities
-    apk add --no-cache --upgrade busybox libcrypto1.1 libretls libssl1.1 ssl_client zlib && \
+    apk add --no-cache --upgrade busybox libretls ssl_client zlib && \
     # Deactivate short moduli
     awk '$5 >= 3071' /etc/ssh/moduli > /etc/ssh/moduli.tmp && mv /etc/ssh/moduli.tmp /etc/ssh/moduli \
     && rm -rf /var/cache/apk/*
