@@ -1,9 +1,9 @@
 ---
 include:
-  - remote: "https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.66/docker-toolkit.yml"
-  - remote: "https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.88/terraform-toolkit.yml"
-  - remote: "https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.88/git-toolkit.yml"
-  - remote: "https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.88/gitlab-toolkit.yml"
+  - remote: "https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.94/docker-toolkit.yml"
+  - remote: "https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.94/terraform-toolkit.yml"
+  - remote: "https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.94/git-toolkit.yml"
+  - remote: "https://raw.githubusercontent.com/miquido/gitlab-templates/1.3.94/gitlab-toolkit.yml"
 
 
 variables:
