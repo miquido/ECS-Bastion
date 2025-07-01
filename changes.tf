@@ -21,7 +21,7 @@ resource "aws_lambda_function" "pubkeys_changed_notification" {
   filename         = local.pubkeys_changed_lambda_zip_filename
   handler          = "pubkeys_changed_notification.lambda_handler"
   source_code_hash = data.archive_file.pubkeys_changed_notification.output_base64sha256
-  runtime          = "python3.9"
+  runtime          = "python3.13"
   timeout          = 6
   memory_size      = 256
   tags             = var.tags
