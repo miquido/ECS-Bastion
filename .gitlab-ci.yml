@@ -13,12 +13,6 @@ variables:
   NAMESPACE: "terraform"
   REPOSITORY: "registry.miquido.net" # local miquido docker registry
 
-.job_template: &job_template
-  image: docker:20.10.6
-  tags:
-    - docker
-    - miquido
-
 stages:
   - build
   - test

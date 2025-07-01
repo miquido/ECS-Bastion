@@ -102,7 +102,7 @@ data "aws_iam_policy_document" "role_pubkeys_changed_notification" {
     ]
 
     resources = [
-      "arn:aws:ecs:${data.aws_region.current.name}:${data.aws_caller_identity.current.account_id}:task/${local.cluster_name}/*"
+      "arn:aws:ecs:${data.aws_region.current.id}:${data.aws_caller_identity.current.account_id}:task/${local.cluster_name}/*"
     ]
   }
 }
