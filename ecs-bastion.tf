@@ -150,4 +150,12 @@ module "ecs_alb_service_task" {
       cpu_architecture        = var.use_spot == true ? "X86_64" : "ARM64"
     }
   ]
+
+  service_connect_configurations = var.service_connect_namespace != null ? [
+    {
+      enabled   = true
+      namespace = var.service_connect_namespace
+      service   = []
+    }
+  ] : []
 }

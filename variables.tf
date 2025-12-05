@@ -93,3 +93,9 @@ variable "restart_on_ssh_keys_change" {
   type        = bool
   description = "Restart bastion ecs task when ssh keys are changed"
 }
+
+variable "service_connect_namespace" {
+  default     = null
+  type        = string
+  description = "aws_service_discovery_private_dns_namespace.map.name"
+}
