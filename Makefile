@@ -1,10 +1,17 @@
 SHELL := /bin/bash
 
-# List of targets the `readme` target should call before generating the readme
-export README_DEPS ?= docs/targets.md docs/terraform.md
+.PHONY: init lint readme
 
--include $(shell curl -sSL -o .build-harness "https://cdn.miquido.dev/build-harness"; echo .build-harness)
+## Initialize local dev environment (run once after cloning)
+init:
+	pre-commit install
+	@echo "pre-commit hooks installed"
+
+## Generate README.md from terraform-docs
+readme:
+	terraform-docs .
 
 ## Lint terraform code
 lint:
-	$(SELF) terraform/install terraform/get-modules terraform/lint terraform/validate
+	terraform fmt -check -recursive
+	terraform validate
