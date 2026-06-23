@@ -46,10 +46,6 @@ container-scanning:
   extends: .container-scanning
   stage: test
 
-miquido-ci-schema-validation:
-  stage: test
-  extends: .miquido-ci-schema-validation
-
 build:
   extends: .build-multiarch
   stage: build
