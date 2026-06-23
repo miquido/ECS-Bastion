@@ -69,6 +69,22 @@ push:
       when: manual
   allow_failure: true
 
+
+push-ghcr:
+  extends: .gitlab-push
+  stage: push
+  environment:
+    name: prod
+  variables:
+    DOCKER_IMAGE_DESTINATION: "ghcr.io/miquido/postgres-walg:${CI_JOB_ID}-${CI_COMMIT_SHORT_SHA}"
+  script:
+    - !reference [.gitlab-docker-login, script]
+    - echo "$GH_TOKEN" | ./regctl registry login ghcr.io --user oauth2 --pass-stdin
+    - ./regctl image copy $DOCKER_BUILD_IMAGE $DOCKER_IMAGE_DESTINATION
+  rules:
+    - if: $CI_COMMIT_BRANCH == $CI_DEFAULT_BRANCH
+      when: manual
+
 docs:
   extends: .generate_readme
   stage: docs
