@@ -72,7 +72,7 @@ push-ghcr:
   environment:
     name: prod
   variables:
-    DOCKER_IMAGE_DESTINATION: "ghcr.io/miquido/postgres-walg:${CI_JOB_ID}-${CI_COMMIT_SHORT_SHA}"
+    DOCKER_IMAGE_DESTINATION: "ghcr.io/miquido/aws-ecs-bastion:${CI_JOB_ID}-${CI_COMMIT_SHORT_SHA}"
   script:
     - !reference [.gitlab-docker-login, script]
     - echo "$GH_TOKEN" | ./regctl registry login ghcr.io --user oauth2 --pass-stdin

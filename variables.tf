@@ -65,7 +65,7 @@ variable "route53_zone_id" {
 }
 
 variable "container_image" {
-  default     = "ghcr.io/miquido/postgres-walg:200273-feccde93"
+  default     = "miquidocompany/aws-ecs-bastion:3546346774-7c1491b5"
   type        = string
   description = "docker image of bastion"
 }
